@@ -188,8 +188,8 @@ class HomeController < ApplicationController
     raise AppError.new("Transaction Not Found") unless transaction
     raise AppError.new("Invalid Auth Token") unless transaction.user == current_user || transaction.sender_address == current_user.evm_chain_address || transaction.receiver_address == current_user.evm_chain_address
 
-    transaction.update(sender_note: params[:sender_note]) if params[:sender_note].present?
-    transaction.update(receiver_note: params[:receiver_note]) if params[:receiver_note].present?
+    transaction.update(sender_note: params[:sender_note]) if params[:sender_note].present? && (transaction.user == current_user || transaction.sender_address == current_user.evm_chain_address)
+    transaction.update(receiver_note: params[:receiver_note]) if params[:receiver_note].present? && transaction.receiver_address == current_user.evm_chain_address
     render json: { result: "ok" }
   end
 
