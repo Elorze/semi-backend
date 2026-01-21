@@ -31,3 +31,6 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 .claude-trace/
+
+.DS_Store
+/data/
