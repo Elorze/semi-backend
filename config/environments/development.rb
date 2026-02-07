@@ -3,19 +3,6 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Disable master key requirement for development environment
-  # This allows the app to run without credentials.yml.enc
-  config.require_master_key = false
-
-  # Support unencrypted data in ActiveRecord Encryption
-  # This prevents errors when credentials are not available
-  config.active_record.encryption.support_unencrypted_data = true
-
-  # Fixed SECRET_KEY_BASE for development environment only
-  # This is a development-only value. Production should use environment variables or credentials.
-  # Value is 64 characters (32 bytes) - original 32-char value repeated once
-  config.secret_key_base = ENV["SECRET_KEY_BASE"] || "a05cf8a05462c272273bdb759c63f178a05cf8a05462c272273bdb759c63f178"
-
   config.action_mailer.delivery_method = :resend
 
   # Make code changes take effect immediately without server restart.
