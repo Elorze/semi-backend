@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_29_042246) do
+ActiveRecord::Schema[8.0].define(version: 2026_02_09_100024) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,6 +56,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_29_042246) do
     t.string "receiver_note"
     t.string "receiver_address"
     t.string "sender_address"
+    t.string "metadata"
+    t.jsonb "extra", default: {}
   end
 
   create_table "users", id: :string, force: :cascade do |t|
