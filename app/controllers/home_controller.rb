@@ -170,7 +170,7 @@ class HomeController < ApplicationController
     user = current_user
     raise AppError.new("User Not Found") unless user
 
-    transaction = user.transactions.create(tx_hash: params[:tx_hash], gas_used: params[:gas_used], status: params[:status], chain: params[:chain], data: params[:data], memo: params[:memo], sender_note: params[:sender_note], receiver_address: params[:receiver_address], sender_address: params[:sender_address], medadata: params[:medadata], extra: params[:extra])
+    transaction = user.transactions.create(tx_hash: params[:tx_hash], gas_used: params[:gas_used], status: params[:status], chain: params[:chain], data: params[:data], memo: params[:memo], sender_note: params[:sender_note], receiver_address: params[:receiver_address], sender_address: params[:sender_address], metadata: params[:metadata], extra: params[:extra])
     user.update(transaction_count: user.transaction_count + 1)
     render json: { result: "ok" }
   end
@@ -181,7 +181,7 @@ class HomeController < ApplicationController
     user = current_user
     raise AppError.new("User Not Found") unless user
 
-    transaction = user.transactions.create(tx_hash: params[:tx_hash], gas_used: params[:gas_used], status: params[:status], chain: params[:chain], data: params[:data], memo: params[:memo], sender_note: params[:sender_note], receiver_address: params[:receiver_address], sender_address: params[:sender_address], medadata: params[:medadata], extra: params[:extra])
+    transaction = user.transactions.create(tx_hash: params[:tx_hash], gas_used: params[:gas_used], status: params[:status], chain: params[:chain], data: params[:data], memo: params[:memo], sender_note: params[:sender_note], receiver_address: params[:receiver_address], sender_address: params[:sender_address], metadata: params[:metadata], extra: params[:extra])
     user.increment!(:total_used_gas_credits, params[:gas_used].to_i)
     user.update(transaction_count: user.transaction_count + 1)
     render json: { result: "ok" }
