@@ -119,7 +119,9 @@ class HomeController < ApplicationController
     user = current_user
     raise AppError.new("User Not Found") unless user
 
-    render json: { result: "ok", remaining_free_transactions: (20 - user.transaction_count) }
+    remaining = 20 - user.transaction_count
+    Rails.logger.info "[DEBUG paymaster] remaining_free_transactions called user_id=#{user.id} transaction_count=#{user.transaction_count} remaining=#{remaining}"
+    render json: { result: "ok", remaining_free_transactions: remaining }
   end
 
   def get_encrypted_keys
@@ -181,6 +183,7 @@ class HomeController < ApplicationController
     user = current_user
     raise AppError.new("User Not Found") unless user
 
+    Rails.logger.info "[DEBUG paymaster] add_transaction_with_gas_credits user_id=#{user.id} tx_hash=#{params[:tx_hash]} gas_used=#{params[:gas_used]} (paymaster-sponsored tx recorded)"
     transaction = user.transactions.create(tx_hash: params[:tx_hash], gas_used: params[:gas_used], status: params[:status], chain: params[:chain], data: params[:data], memo: params[:memo], sender_note: params[:sender_note], receiver_address: params[:receiver_address], sender_address: params[:sender_address], metadata: params[:metadata], extra: params[:extra])
     user.increment!(:total_used_gas_credits, params[:gas_used].to_i)
     user.update(transaction_count: user.transaction_count + 1)
